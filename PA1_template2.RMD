@@ -26,7 +26,7 @@ Activity2$day <- weekdays(as.Date(Activity2$date))
 ```
 ## Question 1
 
-Part 1:Calculating the total number of steps taken per day
+### Part 1:Calculating the total number of steps taken per day
 ```{r}
 library(dplyr)
 stepsperDay <- Activity2%>%
@@ -34,7 +34,7 @@ stepsperDay <- Activity2%>%
   summarise(count = sum(steps))
 ```
 
-Part 2: Histogram showing total number of steps taken per day
+### Part 2: Histogram showing total number of steps taken per day
 ```{r}
 library(ggplot2)
 ggplot(stepsperDay,aes(x = count)) +
@@ -42,7 +42,7 @@ ggplot(stepsperDay,aes(x = count)) +
   labs(x ="Number of steps per day", title = "Steps Per Day") 
 ```
 
-Part 3:Mean and Median of the total number of steps per day
+### Part 3:Mean and Median of the total number of steps per day
 ```{r stats}
 mean <- mean(stepsperDay$count)
 print(mean)
@@ -53,7 +53,7 @@ print(median)
 
 ## Question 2
 
-Part 1:Time series plot showing the Average number of steps per intervel
+### Part 1:Time series plot showing the Average number of steps per intervel
 ```{r}
 library(ggplot2)
 library(dplyr)
@@ -70,7 +70,7 @@ ggplot(IntervalTable, aes(x=interval, y=Avg))+
          ggtitle("Average Number of Steps per Interval")
 ```
 
-Part2:Maximum steps by interval
+### Part2:Maximum steps by interval
 ```{r}
 maxsteps <- max(IntervalTable$Avg)
 
@@ -80,13 +80,13 @@ IntervalTable[IntervalTable$Avg == maxsteps,1] #interval contains the maximum av
 
 ## Question 3
 
-Part 1:Total number of missing values in the dataset
+### Part 1:Total number of missing values in the dataset
 ```{r}
 NAs <- sum(is.na(activity))
 print(NAs)
 ```
 
-Part 2:Create the average number of steps per weekday and interval
+### Part 2:Create the average number of steps per weekday and interval
 ```{r}
 library(dplyr)
 avgTable <- Activity2%>%
@@ -105,7 +105,7 @@ nadata<- activit[is.na(activit$steps),]
 newdata<-merge(nadata, avgTable, by=c("interval", "day"))
 ```
 
-Part 3:Reorder the new substituded data in the same format as clean data set
+### Part 3:Reorder the new substituded data in the same format as clean data set
 ```{r}
 newdata2<- newdata[,c(6,4,1,2,5)]
 colnames(newdata2)<- c("steps", "date", "interval", "day", "DateTime")
@@ -114,7 +114,7 @@ colnames(newdata2)<- c("steps", "date", "interval", "day", "DateTime")
 mergeData <- rbind(Activity2, newdata2)
 ```
 
-Part4.1:Histogram of total number of steps taken each day
+### Part4.1:Histogram of total number of steps taken each day
 ```{r}
 mergeData1 <- mergeData%>%
   group_by(DateTime)%>%
@@ -126,7 +126,7 @@ ggplot(mergeData1,aes(x = count)) +
        title = "Number of Steps Per Day")
 ```
 
-Part 4.2:Calculating mean and median of total number of steps taken per day after imputation.
+### Part 4.2:Calculating mean and median of total number of steps taken per day after imputation.
 ```{r}
 
 mean <- mean(mergeData1$count)
@@ -139,7 +139,7 @@ These values differ from the estimates from the first part of the assignment
 
 ## Question 4
 
-Part 1:Create a new factor variable in the dataset with two levels 
+### Part 1:Create a new factor variable in the dataset with two levels 
 -“weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
 
 ```{r}
@@ -149,7 +149,7 @@ mergeData$dayofWeek <- ifelse(mergeData$day %in% c("Saturday","Sunday"),"Weekend
 ```
 
 
-Part 2:Making a panel plot with time series plot
+### Part 2:Making a panel plot with time series plot
 ```{r}
 library(dplyr)
 mergeData2 <- mergeData%>%
